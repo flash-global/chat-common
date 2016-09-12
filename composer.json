@@ -13,10 +13,15 @@
         {
             "type": "composer",
             "url": "https://composer.flash-global.net"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/flash-global/context"
         }
     ],
     "require": {
         "fei/entities": "^1.0",
+        "fei/context": "^1.0",
         "doctrine/common": "^2.6"
     },
     "require-dev": {

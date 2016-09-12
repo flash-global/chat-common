@@ -5,6 +5,7 @@ namespace Fei\Service\Chat\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Fei\Entity\AbstractEntity;
+use Fei\Service\Context\AbstractContextAwareEntity;
 
 /**
  * Class Location
@@ -14,7 +15,7 @@ use Fei\Entity\AbstractEntity;
  * @Entity
  * @Table(name="rooms")
  */
-class Room extends AbstractEntity
+class Room extends AbstractContextAwareEntity
 {
     /**
      * @var int
@@ -178,20 +179,12 @@ class Room extends AbstractEntity
     }
 
     /**
-     * @return ArrayCollection
+     * Returns the fully qualified class name of the implementation of the ContextInterface targeted by this entity
+     *
+     * @return string
      */
-    public function getContexts()
+    public function getContextClassName()
     {
-        return $this->contexts;
-    }
-
-    /**
-     * @param ArrayCollection $contexts
-     * @return $this
-     */
-    public function setContexts($contexts)
-    {
-        $this->contexts = $contexts;
-        return $this;
+        return RoomContext::class;
     }
 }

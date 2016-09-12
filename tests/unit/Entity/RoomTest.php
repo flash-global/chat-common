@@ -82,9 +82,4 @@ class RoomTest extends Unit
         $this->assertSame($firstmessage, $room->getMessages()->first());
         $this->assertSame($secondmessage, $room->getMessages()->next());
     }
-
-    public function testContexts()
-    {
-
-    }
 }

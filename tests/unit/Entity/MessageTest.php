@@ -66,9 +66,4 @@ class MessageTest extends Unit
         $this->assertEquals($room, $message->getRoom());
         $this->assertAttributeEquals($message->getRoom(), 'room', $message);
     }
-
-    public function testContexts()
-    {
-        
-    }
 }
