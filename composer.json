@@ -1,0 +1,30 @@
+{
+    "name": "fei/chat-common",
+    "description": "Chat common resources",
+    "type": "library",
+    "license": "commercial",
+    "authors": [
+        {
+            "name": "apa-oc",
+            "email": "apa@opcoding.eu"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://composer.flash-global.net"
+        }
+    ],
+    "require": {
+        "fei/entities": "^1.0",
+        "doctrine/common": "^2.6"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fei\\Service\\Chat\\": "src/"
+        }
+    }
+}
