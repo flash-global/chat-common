@@ -3,6 +3,8 @@
 namespace Tests\Fei\Service\Chat\Entity;
 
 use Codeception\Test\Unit;
+use Doctrine\Common\Collections\ArrayCollection;
+use Fei\Service\Chat\Entity\Message;
 use Fei\Service\Chat\Entity\Room;
 
 class RoomTest extends Unit
@@ -67,7 +69,18 @@ class RoomTest extends Unit
 
     public function testMessages()
     {
+        $room = new Room();
+        $messages = new ArrayCollection();
+        $firstmessage = new Message();
+        $secondmessage = new Message();
+        $messages->add($firstmessage);
+        $messages->add($secondmessage);
+        $room->setMessages($messages);
 
+        $this->assertSame($messages, $room->getMessages());
+        $this->assertAttributeSame($room->getMessages(), 'messages', $room);
+        $this->assertSame($firstmessage, $room->getMessages()->first());
+        $this->assertSame($secondmessage, $room->getMessages()->next());
     }
 
     public function testContexts()

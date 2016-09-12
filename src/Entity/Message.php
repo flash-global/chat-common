@@ -47,7 +47,7 @@ class Message extends AbstractEntity
     /**
      * @var ArrayCollection
      *
-     * @OneToMany(targetEntity="Context", mappedBy="location", cascade={"all"})
+     * @OneToMany(targetEntity="Context", mappedBy="message", cascade={"all"})
      */
     protected $contexts;
 
@@ -102,6 +102,13 @@ class Message extends AbstractEntity
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+
+        if (is_string($createdAt)) {
+            $createdAt = new \DateTime($createdAt);
+        }
+
+        $this->createdAt = $createdAt;
+
         return $this;
     }
 

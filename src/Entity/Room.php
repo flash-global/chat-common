@@ -3,6 +3,7 @@
 namespace Fei\Service\Chat\Entity;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Fei\Entity\AbstractEntity;
 
 /**
@@ -50,15 +51,14 @@ class Room extends AbstractEntity
     protected $name;
 
     /**
-     * @var Message
+     * @var ArrayCollection
      * @OneToMany(targetEntity="Message", mappedBy="room", cascade={"all"})
      */
     protected $messages;
 
     /**
      * @var ArrayCollection
-     *
-     * @OneToMany(targetEntity="Context", mappedBy="location", cascade={"all"})
+     * @OneToMany(targetEntity="Context", mappedBy="room", cascade={"all"})
      */
     protected $contexts;
 
@@ -160,7 +160,7 @@ class Room extends AbstractEntity
     }
 
     /**
-     * @return Message
+     * @return ArrayCollection
      */
     public function getMessages()
     {
@@ -168,7 +168,7 @@ class Room extends AbstractEntity
     }
 
     /**
-     * @param Message $messages
+     * @param ArrayCollection $messages
      * @return $this
      */
     public function setMessages($messages)

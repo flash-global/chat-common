@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="55c6ce8f-5b74-4fd3-a739-4ac370a6a388" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Entity/Message.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Entity/Room.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/unit/Entity/RoomTest.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/unit/Entity/MessageTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Entity/Message.php" afterPath="$PROJECT_DIR$/src/Entity/Message.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Entity/Room.php" afterPath="$PROJECT_DIR$/src/Entity/Room.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/unit/Entity/RoomTest.php" afterPath="$PROJECT_DIR$/tests/unit/Entity/RoomTest.php" />
     </list>
     <ignored path="chat-common.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,11 +28,36 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="MessageTest.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/unit/Entity/MessageTest.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="291">
+              <caret line="71" column="8" selection-start-line="71" selection-start-column="8" selection-end-line="71" selection-end-column="8" />
+              <folding>
+                <element signature="e#6#95#0#PHP" expanded="true" />
+                <element signature="e#140#176#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RoomTest.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tests/unit/Entity/RoomTest.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="82" column="72" selection-start-line="82" selection-start-column="72" selection-end-line="82" selection-end-column="72" />
+              <folding>
+                <element signature="e#49#75#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Message.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Entity/Message.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="645">
-              <caret line="43" column="7" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="7" />
+            <state relative-caret-position="90">
+              <caret line="49" column="59" selection-start-line="49" selection-start-column="59" selection-end-line="49" selection-end-column="59" />
               <folding>
                 <element signature="e#43#91#0#PHP" expanded="true" />
               </folding>
@@ -39,23 +65,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Room.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Room.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Entity/Room.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="122" column="21" selection-start-line="122" selection-start-column="21" selection-end-line="122" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RoomTest.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/unit/Entity/RoomTest.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="36" column="32" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
+            <state relative-caret-position="232">
+              <caret line="170" column="29" selection-start-line="170" selection-start-column="29" selection-end-line="170" selection-end-column="29" />
               <folding>
-                <element signature="e#49#75#0#PHP" expanded="true" />
+                <element signature="e#44#92#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -71,8 +87,9 @@
       <list>
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/src/Entity/Message.php" />
-        <option value="$PROJECT_DIR$/tests/unit/Entity/RoomTest.php" />
+        <option value="$PROJECT_DIR$/tests/unit/Entity/MessageTest.php" />
         <option value="$PROJECT_DIR$/src/Entity/Room.php" />
+        <option value="$PROJECT_DIR$/tests/unit/Entity/RoomTest.php" />
       </list>
     </option>
   </component>
@@ -149,6 +166,78 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chat-common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chat-common" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chat-common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chat-common" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="unit" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chat-common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chat-common" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="unit" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chat-common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chat-common" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -198,12 +287,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1473673518355</updated>
-      <workItem from="1473673519754" duration="4188000" />
+      <workItem from="1473673519754" duration="6694000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4188000" />
+    <option name="totallyTimeSpent" value="6694000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="805" extended-state="6" />
@@ -252,31 +341,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tests/unit/Entity/MessageTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="71" column="8" selection-start-line="71" selection-start-column="8" selection-end-line="71" selection-end-column="8" />
+          <folding>
+            <element signature="e#6#95#0#PHP" expanded="true" />
+            <element signature="e#140#176#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Entity/Message.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="43" column="7" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="7" />
+        <state relative-caret-position="90">
+          <caret line="49" column="59" selection-start-line="49" selection-start-column="59" selection-end-line="49" selection-end-column="59" />
           <folding>
             <element signature="e#43#91#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/unit/Entity/RoomTest.php">
+    <entry file="file://$PROJECT_DIR$/src/Entity/Room.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="36" column="32" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
+        <state relative-caret-position="232">
+          <caret line="170" column="29" selection-start-line="170" selection-start-column="29" selection-end-line="170" selection-end-column="29" />
           <folding>
-            <element signature="e#49#75#0#PHP" expanded="true" />
+            <element signature="e#44#92#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/Room.php">
+    <entry file="file://$PROJECT_DIR$/tests/unit/Entity/RoomTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="122" column="21" selection-start-line="122" selection-start-column="21" selection-end-line="122" selection-end-column="21" />
-          <folding />
+        <state relative-caret-position="231">
+          <caret line="82" column="72" selection-start-line="82" selection-start-column="72" selection-end-line="82" selection-end-column="72" />
+          <folding>
+            <element signature="e#49#75#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
