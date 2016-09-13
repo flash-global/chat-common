@@ -407,16 +407,16 @@
         },
         {
             "name": "fei/context",
-            "version": "v1.0.0",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:flash-global/context.git",
-                "reference": "2a389c694b25d49c8e6162ce8b42874576e69fa6"
+                "reference": "39fedfc71000f40d94cff7441c49cc2a5cbfa122"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flash-global/context/zipball/2a389c694b25d49c8e6162ce8b42874576e69fa6",
-                "reference": "2a389c694b25d49c8e6162ce8b42874576e69fa6",
+                "url": "https://api.github.com/repos/flash-global/context/zipball/39fedfc71000f40d94cff7441c49cc2a5cbfa122",
+                "reference": "39fedfc71000f40d94cff7441c49cc2a5cbfa122",
                 "shasum": ""
             },
             "require": {
@@ -424,13 +424,13 @@
                 "fei/entities": "^1.0"
             },
             "require-dev": {
-                "codeception/codeception": "^2.2",
-                "doctrine/orm": "^2.5"
+                "codeception/codeception": "^2.2"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Fei\\Service\\Context\\": "src"
+                    "Fei\\Service\\Context\\": "src",
+                    "Tests\\Fei\\Service\\Context\\Entity\\": "tests/Entity"
                 }
             },
             "authors": [
@@ -441,10 +441,10 @@
             ],
             "description": "Context entity generalization",
             "support": {
-                "source": "https://github.com/flash-global/context/tree/v1.0.0",
+                "source": "https://github.com/flash-global/context/tree/v1.0.2",
                 "issues": "https://github.com/flash-global/context/issues"
             },
-            "time": "2016-09-12 16:19:29"
+            "time": "2016-09-13 09:15:28"
         },
         {
             "name": "fei/entities",
@@ -905,16 +905,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.5.2",
+            "version": "1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "da8529775f14f4fdae33f916eb0cf65f6afbddbc"
+                "reference": "94e5ca3e90aa5b34663780393e10914f7438f991"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/da8529775f14f4fdae33f916eb0cf65f6afbddbc",
-                "reference": "da8529775f14f4fdae33f916eb0cf65f6afbddbc",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/94e5ca3e90aa5b34663780393e10914f7438f991",
+                "reference": "94e5ca3e90aa5b34663780393e10914f7438f991",
                 "shasum": ""
             },
             "require": {
@@ -943,7 +943,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2016-09-06 16:07:05"
+            "time": "2016-09-07 15:34:10"
         },
         {
             "name": "phpdocumentor/reflection-common",
