@@ -69,7 +69,7 @@ class Room implements ContextAwareInterface
     /**
      * @var ArrayCollection
      *
-     * @OneToMany(targetEntity="Context", mappedBy="room", cascade={"all"})
+     * @OneToMany(targetEntity="RoomContext", mappedBy="room", cascade={"all"})
      */
     protected $contexts;
 
