@@ -4,8 +4,8 @@ namespace Fei\Service\Chat\Entity;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Fei\Entity\AbstractEntity;
-use Fei\Service\Context\AbstractContextAwareEntity;
+use Fei\Service\Context\ContextAwareInterface;
+use Fei\Service\Context\ContextAwareTrait;
 
 /**
  * Class Location
@@ -15,8 +15,13 @@ use Fei\Service\Context\AbstractContextAwareEntity;
  * @Entity
  * @Table(name="rooms")
  */
-class Room extends AbstractContextAwareEntity
+class Room implements ContextAwareInterface
 {
+    use ContextAwareTrait;
+
+    const ROOM_CLOSED = 0;
+    const ROOM_OPENED = 1;
+
     /**
      * @var int
      *
@@ -28,6 +33,7 @@ class Room extends AbstractContextAwareEntity
 
     /**
      * @var string
+     *
      * @Column(type="string")
      */
     protected $key;
@@ -41,27 +47,40 @@ class Room extends AbstractContextAwareEntity
 
     /**
      * @var int
+     *
      * @Column(type="integer")
      */
     protected $status;
 
     /**
      * @var string
+     *
      * @Column(type="string")
      */
     protected $name;
 
     /**
      * @var ArrayCollection
+     *
      * @OneToMany(targetEntity="Message", mappedBy="room", cascade={"all"})
      */
     protected $messages;
 
     /**
      * @var ArrayCollection
+     *
      * @OneToMany(targetEntity="Context", mappedBy="room", cascade={"all"})
      */
     protected $contexts;
+
+    /**
+     * Room constructor.
+     */
+    public function __construct()
+    {
+        $this->messages = new ArrayCollection();
+        $this->contexts = new ArrayCollection();
+    }
 
     /**
      * @return int

@@ -4,7 +4,8 @@ namespace Fei\Service\Chat\Entity;
 
 
 use Fei\Entity\EntityInterface;
-use Fei\Service\Context\AbstractContext;
+use Fei\Service\Context\ContextInterface;
+use Fei\Service\Context\ContextTrait;
 
 /**
  * Class RoomContext
@@ -15,8 +16,10 @@ use Fei\Service\Context\AbstractContext;
  *     @Index(name="idx_contexts_keys", columns={"key"})
  * })
  */
-class RoomContext extends AbstractContext
+class RoomContext implements ContextInterface
 {
+    use ContextTrait;
+
     /**
      * @var Room
      * @ManyToOne(targetEntity="Room", inversedBy="contexts")
@@ -44,7 +47,7 @@ class RoomContext extends AbstractContext
      *
      * @param EntityInterface $entity
      */
-    public function setTargetEntity(EntityInterface $entity)
+    public function setTargetEntity($entity)
     {
         $this->setRoom($entity);
     }

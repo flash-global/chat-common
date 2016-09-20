@@ -3,8 +3,8 @@
 namespace Fei\Service\Chat\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Fei\Entity\AbstractEntity;
-use Fei\Service\Context\AbstractContextAwareEntity;
+use Fei\Service\Context\ContextAwareInterface;
+use Fei\Service\Context\ContextAwareTrait;
 
 /**
  * Class Location
@@ -14,8 +14,10 @@ use Fei\Service\Context\AbstractContextAwareEntity;
  * @Entity
  * @Table(name="messages")
  */
-class Message extends AbstractContextAwareEntity
+class Message implements ContextAwareInterface
 {
+    use ContextAwareTrait;
+
     /**
      * @var int
      *
@@ -51,6 +53,14 @@ class Message extends AbstractContextAwareEntity
      * @OneToMany(targetEntity="MessageContext", mappedBy="message", cascade={"all"})
      */
     protected $contexts;
+
+    /**
+     * Message constructor.
+     */
+    public function __construct()
+    {
+        $this->contexts = new ArrayCollection();
+    }
 
     /**
      * @return int

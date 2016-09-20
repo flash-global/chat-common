@@ -5,9 +5,17 @@ use Fei\Entity\EntityInterface;
 use Fei\Entity\Validator\AbstractValidator;
 use Fei\Entity\Validator\Exception;
 use Fei\Service\Chat\Entity\Room;
+use Fei\Service\Context\Validator\ContextAwareValidatorTrait;
 
+/**
+ * Class RoomValidator
+ *
+ * @package Fei\Service\Chat\Validator
+ */
 class RoomValidator extends AbstractValidator
 {
+    use ContextAwareValidatorTrait;
+
     /**
      * Validate a Room instance
      *
@@ -28,7 +36,7 @@ class RoomValidator extends AbstractValidator
         $this->validateStatus($entity->getStatus());
         $this->validateName($entity->getName());
         $this->validateContext($entity->getContext());
-        //$this->validateMessages($entity->getMessages()); // is it useful and relevant to validate Messages ?
+        $this->validateMessages($entity->getMessages());
 
         $errors = $this->getErrors();
 
@@ -89,7 +97,7 @@ class RoomValidator extends AbstractValidator
             return false;
         }
 
-        if ($status != 0 || $status != 1) {
+        if ($status != Room::ROOM_CLOSED && $status != Room::ROOM_OPENED) {
             $this->addError('status', 'Status is only 1 (open chat room) or 0 (closed chat room)');
             return false;
         }
@@ -103,7 +111,7 @@ class RoomValidator extends AbstractValidator
      */
     public function validateName($name)
     {
-        if (empty($status)) {
+        if (empty($name)) {
             $this->addError('name', 'Chat room name cannot be empty');
         }
         return true;
@@ -131,36 +139,6 @@ class RoomValidator extends AbstractValidator
 
             if (!empty($validator->getErrors())) {
                 $this->addError('messages', $validator->getErrorsAsString());
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param $context
-     * @return bool
-     * @throws Exception
-     */
-    public function validateContext($context)
-    {
-        if (!$context instanceof ArrayCollection) {
-            $this->addError(
-                'contexts',
-                'Context has to be and instance of \Doctrine\Common\Collections\ArrayCollection'
-            );
-            return false;
-        }
-
-        if (!$context->isEmpty()) {
-            $validator = new ContextValidator();
-            foreach ($context as $value) {
-                $validator->validate($value);
-            }
-
-            if (!empty($validator->getErrors())) {
-                $this->addError('contexts', $validator->getErrorsAsString());
                 return false;
             }
         }

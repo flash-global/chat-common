@@ -2,9 +2,8 @@
 
 namespace Fei\Service\Chat\Entity;
 
-
-use Fei\Entity\EntityInterface;
-use Fei\Service\Context\AbstractContext;
+use Fei\Service\Context\ContextInterface;
+use Fei\Service\Context\ContextTrait;
 
 /**
  * Class MessageContext
@@ -15,8 +14,9 @@ use Fei\Service\Context\AbstractContext;
  *     @Index(name="idx_contexts_keys", columns={"key"})
  * })
  */
-class MessageContext extends AbstractContext
+class MessageContext implements ContextInterface
 {
+    use ContextTrait;
 
     /**
      * @var Message
@@ -42,11 +42,9 @@ class MessageContext extends AbstractContext
     }
 
     /**
-     * Set the targeted entity by the context
-     *
-     * @param EntityInterface $entity
+     * {@inheritdoc}
      */
-    public function setTargetEntity(EntityInterface $entity)
+    public function setTargetEntity($entity)
     {
         $this->setMessage($entity);
     }

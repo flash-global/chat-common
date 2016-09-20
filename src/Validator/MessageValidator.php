@@ -1,14 +1,17 @@
-<?php namespace Fei\Service\Chat\Validator;
+<?php
 
-use Doctrine\Common\Collections\ArrayCollection;
+namespace Fei\Service\Chat\Validator;
+
 use Fei\Entity\EntityInterface;
 use Fei\Entity\Exception;
 use Fei\Entity\Validator\AbstractValidator;
 use Fei\Service\Chat\Entity\Message;
 use Fei\Service\Chat\Entity\Room;
+use Fei\Service\Context\Validator\ContextAwareValidatorTrait;
 
 class MessageValidator extends AbstractValidator
 {
+    use ContextAwareValidatorTrait;
 
     /**
      * Validate a Message instance
@@ -69,31 +72,5 @@ class MessageValidator extends AbstractValidator
         }
 
         return true;
-    }
-
-    public function validateContext($context)
-    {
-        if (!$context instanceof ArrayCollection) {
-            $this->addError(
-                'contexts',
-                'Context has to be and instance of \Doctrine\Common\Collections\ArrayCollection'
-            );
-
-            return false;
-        }
-
-        if (!$context->isEmpty()) {
-            $validator = new ContextValidator();
-            foreach ($context as $value) {
-                $validator->validate($value);
-            }
-
-            if (!empty($validator->getErrors())) {
-                $this->addError('contexts', $validator->getErrorsAsString());
-                return false;
-            }
-
-            return true;
-        }
     }
 }
