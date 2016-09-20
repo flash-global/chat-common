@@ -3,6 +3,7 @@
 namespace Fei\Service\Chat\Entity;
 
 
+use Fei\Entity\AbstractEntity;
 use Fei\Entity\EntityInterface;
 use Fei\Service\Context\ContextInterface;
 use Fei\Service\Context\ContextTrait;
@@ -16,7 +17,7 @@ use Fei\Service\Context\ContextTrait;
  *     @Index(name="idx_contexts_keys", columns={"key"})
  * })
  */
-class RoomContext implements ContextInterface
+class RoomContext extends AbstractEntity implements ContextInterface
 {
     use ContextTrait;
 

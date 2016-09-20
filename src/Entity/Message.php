@@ -3,6 +3,7 @@
 namespace Fei\Service\Chat\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Fei\Entity\AbstractEntity;
 use Fei\Service\Context\ContextAwareInterface;
 use Fei\Service\Context\ContextAwareTrait;
 
@@ -14,7 +15,7 @@ use Fei\Service\Context\ContextAwareTrait;
  * @Entity
  * @Table(name="messages")
  */
-class Message implements ContextAwareInterface
+class Message extends AbstractEntity implements ContextAwareInterface
 {
     use ContextAwareTrait;
 
