@@ -87,12 +87,12 @@ class RoomValidator extends AbstractValidator
      */
     public function validateStatus($status)
     {
-        if (empty($status)) {
+        if (Room::ROOM_CLOSED !== (int) $status && empty($status)) {
             $this->addError('status', 'Status cannot be empty');
             return false;
         }
 
-        if (!is_int($status)) {
+        if (!is_numeric($status)) {
             $this->addError('status', 'Status must be integer value : 0 or 1');
             return false;
         }

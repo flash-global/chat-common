@@ -35,7 +35,7 @@ class Room extends AbstractEntity implements ContextAwareInterface
     /**
      * @var string
      *
-     * @Column(type="string")
+     * @Column(type="string", name="`key`", unique=true)
      */
     protected $key;
 
@@ -75,12 +75,14 @@ class Room extends AbstractEntity implements ContextAwareInterface
     protected $contexts;
 
     /**
-     * Room constructor.
+     * {@inheritdoc}
      */
-    public function __construct()
+    public function __construct($data = null)
     {
         $this->messages = new ArrayCollection();
         $this->contexts = new ArrayCollection();
+
+        parent::__construct($data);
     }
 
     /**

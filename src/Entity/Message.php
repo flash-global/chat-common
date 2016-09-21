@@ -56,11 +56,13 @@ class Message extends AbstractEntity implements ContextAwareInterface
     protected $contexts;
 
     /**
-     * Message constructor.
+     * {@inheritdoc}
      */
-    public function __construct()
+    public function __construct($data = null)
     {
         $this->contexts = new ArrayCollection();
+
+        parent::__construct($data);
     }
 
     /**
