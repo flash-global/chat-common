@@ -13,11 +13,6 @@ class RoomTransformer extends TransformerAbstract
 {
     public function transform(Room $room)
     {
-        $contextItems = [];
-        foreach ($room->getContext() as $contextItem) {
-            $contextItems[$contextItem->getKey()] = $contextItem->getValue();
-        }
-
         $messageItems = [];
         $messageTransformer = new MessageTransformer();
         foreach ($room->getMessages() as $message) {
@@ -31,7 +26,7 @@ class RoomTransformer extends TransformerAbstract
             'name' => $room->getName(),
             'status' => $room->getStatus(),
             'messages' => $messageItems,
-            'context' => $contextItems,
+            'context' => $room->getContext(),
         );
     }
 }

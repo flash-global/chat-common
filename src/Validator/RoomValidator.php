@@ -28,7 +28,9 @@ class RoomValidator extends AbstractValidator
     public function validate(EntityInterface $entity)
     {
         if (!$entity instanceof Room) {
-            throw new Exception('The Entity to validate must be an instance of \Fei\Service\Locate\Entity\Location');
+            throw new Exception(
+                sprintf('The Entity to validate must be an instance of %s', Room::class)
+            );
         }
 
         $this->validateKey($entity->getKey());
@@ -44,13 +46,21 @@ class RoomValidator extends AbstractValidator
     }
 
     /**
-     * @param $key
+     * Validate key
+     *
+     * @param mixed $key
+     *
      * @return bool
      */
     public function validateKey($key)
     {
         if (empty($key)) {
             $this->addError('key', 'The key cannot be empty');
+            return false;
+        }
+
+        if (!is_string($key)) {
+            $this->addError('key', 'The key must be a string');
             return false;
         }
 
@@ -63,7 +73,10 @@ class RoomValidator extends AbstractValidator
     }
 
     /**
-     * @param $createdAt
+     * Validate createdAt
+     *
+     * @param mixed $createdAt
+     *
      * @return bool
      */
     public function validateCreatedAt($createdAt)
@@ -82,12 +95,15 @@ class RoomValidator extends AbstractValidator
     }
 
     /**
-     * @param $status
+     * Validate Status
+     *
+     * @param mixed $status
+     *
      * @return bool
      */
     public function validateStatus($status)
     {
-        if (Room::ROOM_CLOSED !== (int) $status && empty($status)) {
+        if (Room::ROOM_CLOSED !== $status && empty($status)) {
             $this->addError('status', 'Status cannot be empty');
             return false;
         }
@@ -106,26 +122,39 @@ class RoomValidator extends AbstractValidator
     }
 
     /**
-     * @param $name
+     * Validate name
+     *
+     * @param mixed $name
+     *
      * @return bool
      */
     public function validateName($name)
     {
         if (empty($name)) {
             $this->addError('name', 'Chat room name cannot be empty');
+            return false;
         }
+
+        if (!is_string($name)) {
+            $this->addError('name', 'The chat room name must be a string');
+            return false;
+        }
+
         return true;
     }
 
     /**
-     * @param $messages
+     * Validate messages
+     *
+     * @param mixed $messages
+     *
      * @return bool
      */
     public function validateMessages($messages)
     {
         if (!$messages instanceof ArrayCollection) {
             $this->addError(
-                'contexts',
+                'messages',
                 'Messages has to be and instance of \Doctrine\Common\Collections\ArrayCollection'
             );
             return false;

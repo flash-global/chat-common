@@ -1,18 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: arnaudpagnier
- * Date: 12/09/2016
- * Time: 15:03
- */
 
 namespace Tests\Fei\Service\Chat\Entity;
-
 
 use Fei\Service\Chat\Entity\Message;
 use Codeception\Test\Unit;
 use Fei\Service\Chat\Entity\Room;
 
+/**
+ * Class MessageTest
+ *
+ * @package Tests\Fei\Service\Chat\Entity
+ */
 class MessageTest extends Unit
 {
     public function testId()

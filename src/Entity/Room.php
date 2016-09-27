@@ -2,10 +2,8 @@
 
 namespace Fei\Service\Chat\Entity;
 
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Fei\Entity\AbstractEntity;
-use Fei\Service\Context\ContextAwareInterface;
 use Fei\Service\Context\ContextAwareTrait;
 
 /**
@@ -16,7 +14,7 @@ use Fei\Service\Context\ContextAwareTrait;
  * @Entity
  * @Table(name="rooms")
  */
-class Room extends AbstractEntity implements ContextAwareInterface
+class Room extends AbstractEntity
 {
     use ContextAwareTrait;
 
@@ -68,19 +66,12 @@ class Room extends AbstractEntity implements ContextAwareInterface
     protected $messages;
 
     /**
-     * @var ArrayCollection
-     *
-     * @OneToMany(targetEntity="RoomContext", mappedBy="room", cascade={"all"})
-     */
-    protected $contexts;
-
-    /**
      * {@inheritdoc}
      */
     public function __construct($data = null)
     {
-        $this->messages = new ArrayCollection();
-        $this->contexts = new ArrayCollection();
+        $this->setMessages(new ArrayCollection());
+        $this->setCreatedAt(new \DateTime());
 
         parent::__construct($data);
     }
@@ -192,21 +183,34 @@ class Room extends AbstractEntity implements ContextAwareInterface
 
     /**
      * @param ArrayCollection $messages
+     *
      * @return $this
      */
-    public function setMessages($messages)
+    public function setMessages(ArrayCollection $messages = null)
     {
+        if (!empty($messages)) {
+            foreach ($messages as $message) {
+                $message->setRoom($this);
+            }
+        }
+
         $this->messages = $messages;
+
         return $this;
     }
 
     /**
-     * Returns the fully qualified class name of the implementation of the ContextInterface targeted by this entity
+     * Add a message
      *
-     * @return string
+     * @param Message $message
+     *
+     * @return $this
      */
-    public function getContextClassName()
+    public function addMessage(Message $message)
     {
-        return RoomContext::class;
+        $message->setRoom($this);
+        $this->messages->add($message);
+
+        return $this;
     }
 }

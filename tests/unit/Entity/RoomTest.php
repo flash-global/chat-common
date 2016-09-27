@@ -7,6 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Fei\Service\Chat\Entity\Message;
 use Fei\Service\Chat\Entity\Room;
 
+/**
+ * Class RoomTest
+ *
+ * @package Tests\Fei\Service\Chat\Entity
+ */
 class RoomTest extends Unit
 {
     public function testId()
@@ -80,6 +85,19 @@ class RoomTest extends Unit
         $this->assertSame($messages, $room->getMessages());
         $this->assertAttributeSame($room->getMessages(), 'messages', $room);
         $this->assertSame($firstmessage, $room->getMessages()->first());
+        $this->assertSame($room, $firstmessage->getRoom());
         $this->assertSame($secondmessage, $room->getMessages()->next());
+        $this->assertSame($room, $secondmessage->getRoom());
+    }
+
+    public function testAddMessage()
+    {
+        $room = new Room();
+
+        $room->setMessages(new ArrayCollection([new Message()]));
+        $room->addMessage(new Message());
+
+        $this->assertEquals(2, $room->getMessages()->count());
+        $this->assertSame($room, $room->getMessages()->next()->getRoom());
     }
 }
