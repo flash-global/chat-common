@@ -49,7 +49,7 @@ class Room extends AbstractEntity
      *
      * @Column(type="integer")
      */
-    protected $status;
+    protected $status = Room::ROOM_OPENED;
 
     /**
      * @var string
@@ -103,7 +103,7 @@ class Room extends AbstractEntity
     }
 
     /**
-     * @param int $key
+     * @param string $key
      * @return $this
      */
     public function setKey($key)
@@ -212,5 +212,21 @@ class Room extends AbstractEntity
         $this->messages->add($message);
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hydrate($data)
+    {
+        if (is_array($data['messages'])) {
+            $data['messages'] = new ArrayCollection($data['messages']);
+        }
+
+        if (is_string($data['context'])) {
+            $data['context'] = json_decode($data['context'], true);
+        }
+
+        return parent::hydrate($data);
     }
 }
