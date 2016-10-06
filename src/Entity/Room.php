@@ -219,11 +219,11 @@ class Room extends AbstractEntity
      */
     public function hydrate($data)
     {
-        if (is_array($data['messages'])) {
+        if (isset($data['messages']) && is_array($data['messages'])) {
             $data['messages'] = new ArrayCollection($data['messages']);
         }
 
-        if (is_string($data['context'])) {
+        if (isset($data['context']) && is_string($data['context'])) {
             $data['context'] = json_decode($data['context'], true);
         }
 
