@@ -22,6 +22,7 @@ class RoomTransformerTest extends Unit
             ->setId(1)
             ->setBody('body')
             ->setCreatedAt($now)
+            ->setUser('user')
             ->setContext(['test' => 'test']);
 
         $room = (new Room())
@@ -46,11 +47,21 @@ class RoomTransformerTest extends Unit
                         'id' => 1,
                         'created_at' => $now->format(\DateTime::ISO8601),
                         'body' => 'body',
+                        'user' => 'user',
+                        'room' => [
+                            'id' => 1,
+                            'created_at' => $now->format(\DateTime::ISO8601),
+                            'key' => 'a key',
+                            'name' => 'a name',
+                            'status' => 1,
+                            'messages' => [],
+                            'context' => ['test' => 'test'],
+                        ],
                         'context' => ['test' => 'test']
                     ]
                 ]
             ],
-            (new RoomTransformer())->transform($room)
+            (new RoomTransformer(true))->transform($room)
         );
     }
 }

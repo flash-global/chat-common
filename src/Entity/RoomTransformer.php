@@ -28,7 +28,7 @@ class RoomTransformer extends TransformerAbstract
 
     public function transform(Room $room)
     {
-        $room = array(
+        $transformed = array(
             'id' => (int) $room->getId(),
             'created_at' => $room->getCreatedAt()->format(\DateTime::ISO8601),
             'key' => $room->getKey(),
@@ -41,14 +41,14 @@ class RoomTransformer extends TransformerAbstract
         if ($this->withMessages) {
             $messageItems = [];
             $messageTransformer = new MessageTransformer();
-            foreach ($room->getMessages() as $message) {
+            foreach ($room->getMessages()->toArray() as $message) {
                 $messageItems[$message->getId()] = $messageTransformer->transform($message);
             }
 
-            $room['messages'] = $messageItems;
+            $transformed['messages'] = $messageItems;
         }
 
-        return $room;
+        return $transformed;
     }
 }
 

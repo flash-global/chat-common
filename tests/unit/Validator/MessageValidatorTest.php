@@ -21,6 +21,7 @@ class MessageValidatorTest extends Unit
 
         $room = (new Message())
             ->setBody('body')
+            ->setUser('user')
             ->setRoom(new Room);
 
         $this->assertTrue($validator->validate($room));
@@ -75,6 +76,29 @@ class MessageValidatorTest extends Unit
         $validator = new MessageValidator();
 
         $this->assertTrue($validator->validateCreatedAt(new \DateTime()));
+        $this->assertEmpty($validator->getErrors());
+    }
+
+    public function testValidateUser()
+    {
+        $validator = new MessageValidator();
+
+        $this->assertFalse($validator->validateUser(''));
+        $this->assertEquals('The user cannot be empty', $validator->getErrors()['user'][0]);
+
+        $validator = new MessageValidator();
+
+        $this->assertFalse($validator->validateUser(array('toto')));
+        $this->assertEquals('The user must be a string', $validator->getErrors()['user'][0]);
+
+        $validator = new MessageValidator();
+
+        $this->assertFalse($validator->validateUser(str_repeat('☃', 256)));
+        $this->assertEquals('The user length has to be less or equal to 255', $validator->getErrors()['user'][0]);
+
+        $validator = new MessageValidator();
+
+        $this->assertTrue($validator->validateUser('toto'));
         $this->assertEmpty($validator->getErrors());
     }
 

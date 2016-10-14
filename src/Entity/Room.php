@@ -12,11 +12,16 @@ use Fei\Service\Context\ContextAwareTrait;
  * @package Fei\Service\Chat\Entity
  *
  * @Entity
- * @Table(name="rooms")
+ * @Table(
+ *     name="rooms",
+ *     indexes={ @Index(name="key_idx", columns={"key"}) }
+ * )
  */
 class Room extends AbstractEntity
 {
-    use ContextAwareTrait;
+    use ContextAwareTrait {
+        hydrate as protected hydrateContext;
+    }
 
     const ROOM_CLOSED = 0;
     const ROOM_OPENED = 1;
@@ -217,16 +222,34 @@ class Room extends AbstractEntity
     /**
      * {@inheritdoc}
      */
+    public function toArray($mapped = false)
+    {
+        $data = parent::toArray($mapped);
+
+        if (!empty($data['messages'])) {
+            $messages = [];
+            foreach ($data['messages'] as $value) {
+                $messages[] = $value->toArray();
+            }
+            $data['messages'] = $messages;
+        }
+
+        return $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function hydrate($data)
     {
         if (isset($data['messages']) && is_array($data['messages'])) {
-            $data['messages'] = new ArrayCollection($data['messages']);
+            $messages = [];
+            foreach ($data['messages'] as $message) {
+                $messages[] = new Message($message);
+            }
+            $data['messages'] = new ArrayCollection($messages);
         }
 
-        if (isset($data['context']) && is_string($data['context'])) {
-            $data['context'] = json_decode($data['context'], true);
-        }
-
-        return parent::hydrate($data);
+        $this->hydrateContext($data);
     }
 }

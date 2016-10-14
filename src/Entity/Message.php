@@ -3,6 +3,7 @@
 namespace Fei\Service\Chat\Entity;
 
 use Fei\Entity\AbstractEntity;
+use Fei\Entity\EntityInterface;
 use Fei\Service\Context\ContextAwareTrait;
 
 /**
@@ -11,11 +12,16 @@ use Fei\Service\Context\ContextAwareTrait;
  * @package Fei\Service\Chat\Entity
  *
  * @Entity
- * @Table(name="messages")
+ * @Table(
+ *     name="messages",
+ *     indexes={ @Index(name="user_idx", columns={"user"}) }
+ * )
  */
 class Message extends AbstractEntity
 {
-    use ContextAwareTrait;
+    use ContextAwareTrait {
+        hydrate as protected hydrateContext;
+    }
 
     /**
      * @var int
@@ -28,7 +34,7 @@ class Message extends AbstractEntity
 
     /**
      * @var string
-     * @Column(type="string")
+     * @Column(type="text")
      */
     protected $body;
 
@@ -37,6 +43,12 @@ class Message extends AbstractEntity
      * @Column(type="datetime")
      */
     protected $createdAt;
+
+    /**
+     * @var string
+     * @Column(type="string")
+     */
+    protected $user;
 
     /**
      * @var Room
@@ -71,6 +83,7 @@ class Message extends AbstractEntity
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -89,6 +102,7 @@ class Message extends AbstractEntity
     public function setBody($body)
     {
         $this->body = $body;
+
         return $this;
     }
 
@@ -118,6 +132,30 @@ class Message extends AbstractEntity
     }
 
     /**
+     * Get User
+     *
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set User
+     *
+     * @param string $user
+     *
+     * @return $this
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getRoom()
@@ -129,9 +167,37 @@ class Message extends AbstractEntity
      * @param mixed $room
      * @return $this
      */
-    public function setRoom($room)
+    public function setRoom(Room $room)
     {
         $this->room = $room;
+
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toArray($mapped = false)
+    {
+        $data = parent::toArray($mapped);
+
+        if (!empty($data['room']) && $data['room'] instanceof Room) {
+            $data['room_id'] = $data['room']->getId();
+            unset($data['room']);
+        }
+
+        return $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hydrate($data)
+    {
+        if (isset($data['room']) && is_array($data['room'])) {
+            $data['room'] = new Room($data['room']);
+        }
+
+        $this->hydrateContext($data);
     }
 }

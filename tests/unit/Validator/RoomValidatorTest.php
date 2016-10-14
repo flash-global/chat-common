@@ -90,7 +90,7 @@ class RoomValidatorTest extends Unit
         $validator = new RoomValidator();
 
         $this->assertFalse($validator->validateStatus(null));
-        $this->assertEquals('Status cannot be empty', $validator->getErrors()['status'][0]);
+        $this->assertEquals('Status cannot be null', $validator->getErrors()['status'][0]);
 
         $validator = new RoomValidator();
 
@@ -117,12 +117,17 @@ class RoomValidatorTest extends Unit
         $validator = new RoomValidator();
 
         $this->assertFalse($validator->validateName(''));
-        $this->assertEquals('Chat room name cannot be empty', $validator->getErrors()['name'][0]);
+        $this->assertEquals('The chat room name cannot be empty', $validator->getErrors()['name'][0]);
 
         $validator = new RoomValidator();
 
         $this->assertFalse($validator->validateName(array('toto')));
         $this->assertEquals('The chat room name must be a string', $validator->getErrors()['name'][0]);
+
+        $validator = new RoomValidator();
+
+        $this->assertFalse($validator->validateName(str_repeat('☃', 256)));
+        $this->assertEquals('The chat room name length has to be less or equal to 255', $validator->getErrors()['name'][0]);
 
         $validator = new RoomValidator();
 
@@ -145,7 +150,7 @@ class RoomValidatorTest extends Unit
         $messages = new ArrayCollection([new Message()]);
         $this->assertFalse($validator->validateMessages($messages));
         $this->assertEquals(
-            'body: Chat message body cannot be empty; room: Message must be attached to a room',
+            'body: Chat message body cannot be empty; user: The user cannot be empty; room: Message must be attached to a room',
             $validator->getErrors()['messages'][0]
         );
 
@@ -153,6 +158,7 @@ class RoomValidatorTest extends Unit
 
         $message = (new Message())
             ->setBody('test')
+            ->setUser('user')
             ->setRoom(new Room());
         $messages = new ArrayCollection([$message]);
         $this->assertTrue($validator->validateMessages($messages));

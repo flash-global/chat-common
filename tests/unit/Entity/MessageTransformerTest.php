@@ -21,6 +21,7 @@ class MessageTransformerTest extends Unit
             ->setId(1)
             ->setBody('body')
             ->setCreatedAt($now)
+            ->setUser('user')
             ->setContext(['test' => 'test']);
 
         $this->assertEquals(
@@ -28,6 +29,8 @@ class MessageTransformerTest extends Unit
                 'id' => 1,
                 'created_at' => $now->format(\DateTime::ISO8601),
                 'body' => 'body',
+                'user' => 'user',
+                'room' => [],
                 'context' => ['test' => 'test']
             ],
             (new MessageTransformer())->transform($message)

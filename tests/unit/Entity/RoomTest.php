@@ -100,4 +100,110 @@ class RoomTest extends Unit
         $this->assertEquals(2, $room->getMessages()->count());
         $this->assertSame($room, $room->getMessages()->next()->getRoom());
     }
+
+    public function testHydrate()
+    {
+        $now = new \DateTime();
+
+        $room = new Room([
+            'id' => 1,
+            'key' => 'key',
+            'name' => 'name',
+            'createdAt' => $now,
+            'status' => Room::ROOM_OPENED,
+            'context' => ['key' => 'value'],
+            'messages' => [
+                [
+                    'id' => 1,
+                    'body' => 'body',
+                    'createdAt' => $now,
+                    'user' => 'user',
+                    'context' => ['key' => 'value']
+                ]
+            ]
+        ]);
+
+        $this->assertEquals(
+            (new Room())
+                ->setId(1)
+                ->setKey('key')
+                ->setName('name')
+                ->setCreatedAt($now)
+                ->setStatus(Room::ROOM_OPENED)
+                ->setContext(['key' => 'value'])
+                ->addMessage((new Message())
+                    ->setId(1)
+                    ->setBody('body')
+                    ->setCreatedAt($now)
+                    ->setUser('user')
+                    ->setContext(['key' => 'value'])
+                ),
+            $room
+        );
+    }
+
+    public function testHydrateDataEmpty()
+    {
+        $message = new Room([]);
+
+        $this->assertEquals(new Room(), $message);
+    }
+
+    public function testHydrateRoomEmpty()
+    {
+        $message = new Room(['messages' => []]);
+
+        $this->assertEquals((new room()), $message);
+    }
+
+    public function testToArray()
+    {
+        $now = new \DateTime();
+
+        $room = (new Room())
+            ->setCreatedAt($now)
+            ->addMessage((new Message())->setCreatedAt($now));
+
+        $this->assertEquals(
+            [
+                'id' => $room->getId(),
+                'key' => $room->getKey(),
+                'created_at' => $room->getCreatedAt()->format(\DateTime::RFC3339),
+                'status' => $room->getStatus(),
+                'name' => $room->getName(),
+                'messages' => [
+                    [
+                        'id' => null,
+                        'body' => null,
+                        'user' => null,
+                        'created_at' => $now->format(\DateTime::RFC3339),
+                        'room_id' => $room->getId(),
+                        'context' => null
+                    ]
+                ],
+                'context' => null
+            ],
+            $room->toArray()
+        );
+    }
+
+    public function testToArrayEmptyMessage()
+    {
+        $now = new \DateTime();
+
+        $room = (new Room())->setCreatedAt($now);
+
+        $this->assertEquals(
+            [
+                'id' => $room->getId(),
+                'key' => $room->getKey(),
+                'created_at' => $room->getCreatedAt()->format(\DateTime::RFC3339),
+                'status' => $room->getStatus(),
+                'name' => $room->getName(),
+                'messages' => [],
+                'context' => null
+            ],
+            $room->toArray()
+        );
+    }
 }

@@ -1,4 +1,6 @@
-<?php namespace Fei\Service\Chat\Validator;
+<?php
+
+namespace Fei\Service\Chat\Validator;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Fei\Entity\EntityInterface;
@@ -103,8 +105,8 @@ class RoomValidator extends AbstractValidator
      */
     public function validateStatus($status)
     {
-        if (Room::ROOM_CLOSED !== $status && empty($status)) {
-            $this->addError('status', 'Status cannot be empty');
+        if (is_null($status)) {
+            $this->addError('status', 'Status cannot be null');
             return false;
         }
 
@@ -131,12 +133,17 @@ class RoomValidator extends AbstractValidator
     public function validateName($name)
     {
         if (empty($name)) {
-            $this->addError('name', 'Chat room name cannot be empty');
+            $this->addError('name', 'The chat room name cannot be empty');
             return false;
         }
 
         if (!is_string($name)) {
             $this->addError('name', 'The chat room name must be a string');
+            return false;
+        }
+
+        if (mb_strlen($name, 'UTF-8') > 255) {
+            $this->addError('name', 'The chat room name length has to be less or equal to 255');
             return false;
         }
 
