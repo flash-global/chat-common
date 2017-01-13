@@ -28,6 +28,12 @@ class RoomTransformer extends TransformerAbstract
 
     public function transform(Room $room)
     {
+        $contextItems = array();
+
+        foreach ($room->getContexts() as $contextItem) {
+            $contextItems[$contextItem->getKey()] = $contextItem->getValue();
+        }
+
         $transformed = array(
             'id' => (int) $room->getId(),
             'created_at' => $room->getCreatedAt()->format(\DateTime::ISO8601),
@@ -35,7 +41,7 @@ class RoomTransformer extends TransformerAbstract
             'name' => $room->getName(),
             'status' => $room->getStatus(),
             'messages' => [],
-            'context' => $room->getContext()
+            'contexts' => $contextItems
         );
 
         if ($this->withMessages) {
@@ -51,4 +57,3 @@ class RoomTransformer extends TransformerAbstract
         return $transformed;
     }
 }
-

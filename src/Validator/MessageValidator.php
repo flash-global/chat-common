@@ -39,7 +39,7 @@ class MessageValidator extends AbstractValidator
         $this->validateCreatedAt($entity->getCreatedAt());
         $this->validateUser($entity->getUser());
         $this->validateRoom($entity->getRoom());
-        $this->validateContext($entity->getContext());
+        //$this->validateContext($entity->getContext());
         $errors = $this->getErrors();
 
         return empty($errors);

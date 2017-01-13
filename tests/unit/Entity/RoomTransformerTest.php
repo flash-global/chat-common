@@ -23,7 +23,7 @@ class RoomTransformerTest extends Unit
             ->setBody('body')
             ->setCreatedAt($now)
             ->setUser('user')
-            ->setContext(['test' => 'test']);
+            ->setContexts(['test' => 'test']);
 
         $room = (new Room())
             ->setId(1)
@@ -31,7 +31,7 @@ class RoomTransformerTest extends Unit
             ->setKey('a key')
             ->setName('a name')
             ->setStatus(Room::ROOM_OPENED)
-            ->setContext(['test' => 'test'])
+            ->setContexts(['test' => 'test'])
             ->addMessage($message);
 
         $this->assertEquals(
@@ -41,7 +41,7 @@ class RoomTransformerTest extends Unit
                 'key' => 'a key',
                 'name' => 'a name',
                 'status' => 1,
-                'context' => ['test' => 'test'],
+                'contexts' => ['test' => 'test'],
                 'messages' => [
                     1 => [
                         'id' => 1,
@@ -55,9 +55,9 @@ class RoomTransformerTest extends Unit
                             'name' => 'a name',
                             'status' => 1,
                             'messages' => [],
-                            'context' => ['test' => 'test'],
+                            'contexts' => ['test' => 'test'],
                         ],
-                        'context' => ['test' => 'test']
+                        'contexts' => ['test' => 'test']
                     ]
                 ]
             ],

@@ -19,10 +19,6 @@ use Fei\Service\Context\ContextAwareTrait;
  */
 class Room extends AbstractEntity
 {
-    use ContextAwareTrait {
-        hydrate as protected hydrateContext;
-    }
-
     const ROOM_CLOSED = 0;
     const ROOM_OPENED = 1;
 
@@ -71,12 +67,21 @@ class Room extends AbstractEntity
     protected $messages;
 
     /**
+     * @var ArrayCollection
+     *
+     * @OneToMany(targetEntity="RoomContext", mappedBy="room", cascade={"all"})
+     */
+    protected $contexts;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct($data = null)
     {
         $this->setMessages(new ArrayCollection());
         $this->setCreatedAt(new \DateTime());
+
+        $this->contexts = new ArrayCollection();
 
         parent::__construct($data);
     }
@@ -220,6 +225,69 @@ class Room extends AbstractEntity
     }
 
     /**
+     * Get Contexts
+     *
+     * @return mixed
+     */
+    public function getContexts()
+    {
+        return $this->contexts;
+    }
+
+    /**
+     * Set Contexts
+     *
+     * @param mixed $contexts
+     *
+     * @return $this
+     */
+    public function setContexts($contexts)
+    {
+        if ($contexts instanceof RoomContext) {
+            $contexts->setRoom($this);
+            $contexts = array($contexts);
+        }
+        if ($contexts instanceof \ArrayObject || is_array($contexts) || $contexts instanceof \Iterator) {
+            foreach ($contexts as $key => $value) {
+                if (!$value instanceof Context) {
+                    $value = $value instanceof \stdClass ? (array) $value : $value;
+                    if (is_int($key)
+                        && is_array($value)
+                        && array_key_exists('key', $value)
+                        && array_key_exists('value', $value)
+                    ) {
+                        $contextData = array('key' => $value['key'], 'value' => $value['value']);
+                        if (isset($value['id'])) {
+                            $contextData['id'] = $value['id'];
+                        }
+                    } else {
+                        $contextData = array('key' => $key, 'value' => $value);
+                    }
+                    $value = new RoomContext($contextData);
+                }
+                $value->setRoom($this);
+                $this->contexts->add($value);
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Add a context
+     *
+     * @param RoomContext $context
+     *
+     * @return $this
+     */
+    public function addContext(RoomContext $context)
+    {
+        $context->setRoom($this);
+        $this->contexts->add($context);
+
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function toArray($mapped = false)
@@ -233,6 +301,7 @@ class Room extends AbstractEntity
             }
             $data['messages'] = $messages;
         }
+
 
         return $data;
     }
@@ -250,6 +319,6 @@ class Room extends AbstractEntity
             $data['messages'] = new ArrayCollection($messages);
         }
 
-        $this->hydrateContext($data);
+        parent::hydrate($data);
     }
 }

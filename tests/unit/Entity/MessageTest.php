@@ -2,8 +2,10 @@
 
 namespace Tests\Fei\Service\Chat\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Fei\Service\Chat\Entity\Message;
 use Codeception\Test\Unit;
+use Fei\Service\Chat\Entity\MessageContext;
 use Fei\Service\Chat\Entity\Room;
 
 /**
@@ -83,14 +85,14 @@ class MessageTest extends Unit
             'body' => 'body',
             'createdAt' => $now,
             'user' => 'user',
-            'context' => ['key' => 'value'],
+            'contexts' => ['key' => 'value'],
             'room' => [
                 'id' => 1,
                 'key' => 'key',
                 'name' => 'name',
                 'createdAt' => $now,
                 'status' => Room::ROOM_OPENED,
-                'context' => ['key' => 'value']
+                'contexts' => ['key' => 'value']
             ]
         ]);
 
@@ -100,7 +102,7 @@ class MessageTest extends Unit
                 ->setBody('body')
                 ->setCreatedAt($now)
                 ->setUser('user')
-                ->setContext(['key' => 'value'])
+                ->setContexts(['key' => 'value'])
                 ->setRoom(
                     (new Room())
                         ->setId(1)
@@ -108,9 +110,49 @@ class MessageTest extends Unit
                         ->setName('name')
                         ->setCreatedAt($now)
                         ->setStatus(Room::ROOM_OPENED)
-                        ->setContext(['key' => 'value'])
+                        ->setContexts(['key' => 'value'])
                 ),
             $message
+        );
+    }
+
+    public function testSettingContextsWhenTheParamIsAMessageContext()
+    {
+        $expected = new ArrayCollection([new MessageContext(['key' => 'key', 'value' => 'value'])]);
+
+        $message = new Message();
+        $message->setContexts($expected->get(0));
+
+        $this->assertEquals($expected, $message->getContexts());
+    }
+
+    public function testSettingContextsWhenTheParamIsAnArrayOfKeyValuePair()
+    {
+        $message = new Message();
+        $message->setContexts([
+            ['key' => 'key', 'value' => 'value']
+        ]);
+
+        $this->assertEquals(
+            new ArrayCollection([
+                (new MessageContext(['key' => 'key', 'value' => 'value']))->setMessage($message)
+            ]),
+            $message->getContexts()
+        );
+    }
+
+    public function testAddContext()
+    {
+        $message = new Message();
+
+        $message->addContext(new MessageContext(['key' => 'k', 'value' => 'v']));
+
+        $this->assertEquals(
+            new ArrayCollection([
+                (new MessageContext(['key' => 'k', 'value' => 'v']))
+                    ->setMessage($message)
+            ]),
+            $message->getContexts()
         );
     }
 
@@ -144,7 +186,7 @@ class MessageTest extends Unit
                 'user' => null,
                 'created_at' => $now->format(\DateTime::RFC3339),
                 'room_id' => null,
-                'context' => null
+                'contexts' => new ArrayCollection()
             ],
             $message->toArray()
         );
@@ -163,7 +205,7 @@ class MessageTest extends Unit
                 'body' => null,
                 'user' => null,
                 'created_at' => $now->format(\DateTime::RFC3339),
-                'context' => null,
+                'contexts' => new ArrayCollection(),
                 'room' => null
             ],
             $message->toArray()

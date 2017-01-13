@@ -22,7 +22,7 @@ class MessageTransformerTest extends Unit
             ->setBody('body')
             ->setCreatedAt($now)
             ->setUser('user')
-            ->setContext(['test' => 'test']);
+            ->setContexts(['test' => 'test']);
 
         $this->assertEquals(
             [
@@ -31,7 +31,7 @@ class MessageTransformerTest extends Unit
                 'body' => 'body',
                 'user' => 'user',
                 'room' => [],
-                'context' => ['test' => 'test']
+                'contexts' => ['test' => 'test']
             ],
             (new MessageTransformer())->transform($message)
         );

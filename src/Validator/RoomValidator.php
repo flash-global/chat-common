@@ -39,7 +39,7 @@ class RoomValidator extends AbstractValidator
         $this->validateCreatedAt($entity->getCreatedAt());
         $this->validateStatus($entity->getStatus());
         $this->validateName($entity->getName());
-        $this->validateContext($entity->getContext());
+        //$this->validateContext($entity->getContexts());
         $this->validateMessages($entity->getMessages());
 
         $errors = $this->getErrors();

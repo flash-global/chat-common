@@ -111,14 +111,14 @@ class RoomTest extends Unit
             'name' => 'name',
             'createdAt' => $now,
             'status' => Room::ROOM_OPENED,
-            'context' => ['key' => 'value'],
+            'contexts' => ['key' => 'value'],
             'messages' => [
                 [
                     'id' => 1,
                     'body' => 'body',
                     'createdAt' => $now,
                     'user' => 'user',
-                    'context' => ['key' => 'value']
+                    'contexts' => ['key' => 'value']
                 ]
             ]
         ]);
@@ -130,13 +130,14 @@ class RoomTest extends Unit
                 ->setName('name')
                 ->setCreatedAt($now)
                 ->setStatus(Room::ROOM_OPENED)
-                ->setContext(['key' => 'value'])
-                ->addMessage((new Message())
+                ->setContexts(['key' => 'value'])
+                ->addMessage(
+                    (new Message())
                     ->setId(1)
                     ->setBody('body')
                     ->setCreatedAt($now)
                     ->setUser('user')
-                    ->setContext(['key' => 'value'])
+                    ->setContexts(['key' => 'value'])
                 ),
             $room
         );
@@ -178,10 +179,10 @@ class RoomTest extends Unit
                         'user' => null,
                         'created_at' => $now->format(\DateTime::RFC3339),
                         'room_id' => $room->getId(),
-                        'context' => null
+                        'contexts' => new ArrayCollection()
                     ]
                 ],
-                'context' => null
+                'contexts' => new ArrayCollection()
             ],
             $room->toArray()
         );
@@ -201,7 +202,7 @@ class RoomTest extends Unit
                 'status' => $room->getStatus(),
                 'name' => $room->getName(),
                 'messages' => [],
-                'context' => null
+                'contexts' => new ArrayCollection()
             ],
             $room->toArray()
         );

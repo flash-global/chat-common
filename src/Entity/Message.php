@@ -2,9 +2,9 @@
 
 namespace Fei\Service\Chat\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Fei\Entity\AbstractEntity;
 use Fei\Entity\EntityInterface;
-use Fei\Service\Context\ContextAwareTrait;
 
 /**
  * Class Location
@@ -19,10 +19,6 @@ use Fei\Service\Context\ContextAwareTrait;
  */
 class Message extends AbstractEntity
 {
-    use ContextAwareTrait {
-        hydrate as protected hydrateContext;
-    }
-
     /**
      * @var int
      *
@@ -59,11 +55,19 @@ class Message extends AbstractEntity
     protected $room;
 
     /**
+     * @var ArrayCollection
+     *
+     * @OneToMany(targetEntity="MessageContext", mappedBy="message", cascade={"all"})
+     */
+    protected $contexts;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct($data = null)
     {
         $this->setCreatedAt(new \DateTime());
+        $this->contexts = new ArrayCollection();
 
         parent::__construct($data);
     }
@@ -175,6 +179,68 @@ class Message extends AbstractEntity
     }
 
     /**
+     * Get Contexts
+     *
+     * @return ArrayCollection
+     */
+    public function getContexts()
+    {
+        return $this->contexts;
+    }
+
+    /**
+     * Set Contexts
+     *
+     * @param mixed $contexts
+     *
+     * @return $this
+     */
+    public function setContexts($contexts)
+    {
+        if ($contexts instanceof MessageContext) {
+            $contexts->setMessage($this);
+            $contexts = array($contexts);
+        }
+        if ($contexts instanceof \ArrayObject || is_array($contexts) || $contexts instanceof \Iterator) {
+            foreach ($contexts as $key => $value) {
+                if (!$value instanceof Context) {
+                    $value = $value instanceof \stdClass ? (array) $value : $value;
+                    if (is_int($key)
+                        && is_array($value)
+                        && array_key_exists('key', $value)
+                        && array_key_exists('value', $value)
+                    ) {
+                        $contextData = array('key' => $value['key'], 'value' => $value['value']);
+                        if (isset($value['id'])) {
+                            $contextData['id'] = $value['id'];
+                        }
+                    } else {
+                        $contextData = array('key' => $key, 'value' => $value);
+                    }
+                    $value = new MessageContext($contextData);
+                }
+                $value->setMessage($this);
+                $this->contexts->add($value);
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Add a context
+     *
+     * @param MessageContext $context
+     *
+     * @return $this
+     */
+    public function addContext(MessageContext $context)
+    {
+        $context->setMessage($this);
+        $this->contexts->add($context);
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function toArray($mapped = false)
@@ -198,6 +264,6 @@ class Message extends AbstractEntity
             $data['room'] = new Room($data['room']);
         }
 
-        $this->hydrateContext($data);
+        parent::hydrate($data);
     }
 }
