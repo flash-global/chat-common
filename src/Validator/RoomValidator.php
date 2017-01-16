@@ -16,8 +16,6 @@ use Fei\Service\Context\Validator\ContextAwareValidatorTrait;
  */
 class RoomValidator extends AbstractValidator
 {
-    use ContextAwareValidatorTrait;
-
     /**
      * Validate a Room instance
      *

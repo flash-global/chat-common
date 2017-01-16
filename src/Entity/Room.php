@@ -302,6 +302,14 @@ class Room extends AbstractEntity
             $data['messages'] = $messages;
         }
 
+        if (!empty($data['contexts'])) {
+            $context = array();
+            foreach ($data['contexts'] as $key => $value) {
+                $context[$key] = $value->toArray();
+                unset($context[$key]['room']);
+            }
+            $data['contexts'] = $context;
+        }
 
         return $data;
     }

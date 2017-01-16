@@ -252,6 +252,15 @@ class Message extends AbstractEntity
             unset($data['room']);
         }
 
+        if (!empty($data['contexts'])) {
+            $context = array();
+            foreach ($data['contexts'] as $key => $value) {
+                $context[$key] = $value->toArray();
+                unset($context[$key]['message']);
+            }
+            $data['contexts'] = $context;
+        }
+
         return $data;
     }
 

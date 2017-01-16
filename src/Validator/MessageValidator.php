@@ -16,8 +16,6 @@ use Fei\Service\Context\Validator\ContextAwareValidatorTrait;
  */
 class MessageValidator extends AbstractValidator
 {
-    use ContextAwareValidatorTrait;
-
     /**
      * Validate a Message instance
      *
