@@ -179,10 +179,10 @@ class RoomTest extends Unit
                         'user' => null,
                         'created_at' => $now->format(\DateTime::RFC3339),
                         'room_id' => $room->getId(),
-                        'contexts' => new ArrayCollection()
+                        'contexts' => []
                     ]
                 ],
-                'contexts' => new ArrayCollection()
+                'contexts' => []
             ],
             $room->toArray()
         );
@@ -202,7 +202,7 @@ class RoomTest extends Unit
                 'status' => $room->getStatus(),
                 'name' => $room->getName(),
                 'messages' => [],
-                'contexts' => new ArrayCollection()
+                'contexts' => []
             ],
             $room->toArray()
         );

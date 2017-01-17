@@ -186,7 +186,7 @@ class MessageTest extends Unit
                 'user' => null,
                 'created_at' => $now->format(\DateTime::RFC3339),
                 'room_id' => null,
-                'contexts' => new ArrayCollection()
+                'contexts' => []
             ],
             $message->toArray()
         );
@@ -205,7 +205,7 @@ class MessageTest extends Unit
                 'body' => null,
                 'user' => null,
                 'created_at' => $now->format(\DateTime::RFC3339),
-                'contexts' => new ArrayCollection(),
+                'contexts' => [],
                 'room' => null
             ],
             $message->toArray()
