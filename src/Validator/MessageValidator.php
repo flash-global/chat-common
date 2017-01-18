@@ -16,6 +16,8 @@ use Fei\Service\Context\Validator\ContextAwareValidatorTrait;
  */
 class MessageValidator extends AbstractValidator
 {
+    use ContextValidator;
+
     /**
      * Validate a Message instance
      *
@@ -27,6 +29,7 @@ class MessageValidator extends AbstractValidator
      */
     public function validate(EntityInterface $entity)
     {
+
         if (!$entity instanceof Message) {
             throw new Exception(
                 sprintf('The Entity to validate must be an instance of %s', Message::class)
@@ -37,7 +40,8 @@ class MessageValidator extends AbstractValidator
         $this->validateCreatedAt($entity->getCreatedAt());
         $this->validateUser($entity->getUser());
         $this->validateRoom($entity->getRoom());
-        //$this->validateContext($entity->getContext());
+
+        $this->validateContext($entity->getContexts());
         $errors = $this->getErrors();
 
         return empty($errors);

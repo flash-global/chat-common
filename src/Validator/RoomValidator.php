@@ -16,6 +16,8 @@ use Fei\Service\Context\Validator\ContextAwareValidatorTrait;
  */
 class RoomValidator extends AbstractValidator
 {
+    use ContextValidator;
+
     /**
      * Validate a Room instance
      *
@@ -37,7 +39,7 @@ class RoomValidator extends AbstractValidator
         $this->validateCreatedAt($entity->getCreatedAt());
         $this->validateStatus($entity->getStatus());
         $this->validateName($entity->getName());
-        //$this->validateContext($entity->getContexts());
+        $this->validateContext($entity->getContexts());
         $this->validateMessages($entity->getMessages());
 
         $errors = $this->getErrors();
