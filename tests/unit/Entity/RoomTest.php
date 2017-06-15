@@ -6,6 +6,7 @@ use Codeception\Test\Unit;
 use Doctrine\Common\Collections\ArrayCollection;
 use Fei\Service\Chat\Entity\Message;
 use Fei\Service\Chat\Entity\Room;
+use Fei\Service\Chat\Entity\RoomContext;
 
 /**
  * Class RoomTest
@@ -117,7 +118,7 @@ class RoomTest extends Unit
                     'id' => 1,
                     'body' => 'body',
                     'createdAt' => $now,
-                    'user' => 'user',
+                    'username' => 'user',
                     'contexts' => ['key' => 'value']
                 ]
             ]
@@ -136,7 +137,7 @@ class RoomTest extends Unit
                     ->setId(1)
                     ->setBody('body')
                     ->setCreatedAt($now)
-                    ->setUser('user')
+                    ->setUsername('user')
                     ->setContexts(['key' => 'value'])
                 ),
             $room
@@ -163,7 +164,8 @@ class RoomTest extends Unit
 
         $room = (new Room())
             ->setCreatedAt($now)
-            ->addMessage((new Message())->setCreatedAt($now));
+            ->addMessage((new Message())->setCreatedAt($now))
+            ->addContext(new RoomContext(['key' => 'test', 'value' => 'test']));
 
         $this->assertEquals(
             [
@@ -176,13 +178,20 @@ class RoomTest extends Unit
                     [
                         'id' => null,
                         'body' => null,
-                        'user' => null,
+                        'username' => null,
+                        'display_username' => null,
                         'created_at' => $now->format(\DateTime::RFC3339),
                         'room_id' => $room->getId(),
                         'contexts' => []
                     ]
                 ],
-                'contexts' => []
+                'contexts' => [
+                    [
+                        'id' => null,
+                        'key' => 'test',
+                        'value' => 'test'
+                    ]
+                ]
             ],
             $room->toArray()
         );
@@ -205,6 +214,46 @@ class RoomTest extends Unit
                 'contexts' => []
             ],
             $room->toArray()
+        );
+    }
+
+    public function testSettingContextsWhenTheParamIsAMessageContext()
+    {
+        $expected = new ArrayCollection([new RoomContext(['key' => 'key', 'value' => 'value'])]);
+
+        $room = new Room();
+        $room->setContexts($expected->get(0));
+
+        $this->assertEquals($expected, $room->getContexts());
+    }
+
+    public function testSettingContextsWhenTheParamIsAnArrayOfKeyValuePair()
+    {
+        $room = new Room();
+        $room->setContexts([
+            ['key' => 'key', 'value' => 'value']
+        ]);
+
+        $this->assertEquals(
+            new ArrayCollection([
+                (new RoomContext(['key' => 'key', 'value' => 'value']))->setRoom($room)
+            ]),
+            $room->getContexts()
+        );
+    }
+
+    public function testAddContext()
+    {
+        $room = new Room();
+
+        $room->addContext(new RoomContext(['key' => 'k', 'value' => 'v']));
+
+        $this->assertEquals(
+            new ArrayCollection([
+                (new RoomContext(['key' => 'k', 'value' => 'v']))
+                    ->setRoom($room)
+            ]),
+            $room->getContexts()
         );
     }
 }

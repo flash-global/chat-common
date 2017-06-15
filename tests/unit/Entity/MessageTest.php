@@ -67,14 +67,14 @@ class MessageTest extends Unit
         $this->assertAttributeEquals($message->getRoom(), 'room', $message);
     }
 
-    public function testUser()
+    public function testUsername()
     {
         $message = new Message();
 
-        $message->setUser('user');
+        $message->setUsername('user');
 
-        $this->assertEquals('user', $message->getUser());
-        $this->assertAttributeEquals($message->getUser(), 'user', $message);
+        $this->assertEquals('user', $message->getUsername());
+        $this->assertAttributeEquals($message->getUsername(), 'username', $message);
     }
 
     public function testHydrate()
@@ -84,7 +84,7 @@ class MessageTest extends Unit
             'id' => 1,
             'body' => 'body',
             'createdAt' => $now,
-            'user' => 'user',
+            'username' => 'user',
             'contexts' => ['key' => 'value'],
             'room' => [
                 'id' => 1,
@@ -101,7 +101,7 @@ class MessageTest extends Unit
                 ->setId(1)
                 ->setBody('body')
                 ->setCreatedAt($now)
-                ->setUser('user')
+                ->setUsername('user')
                 ->setContexts(['key' => 'value'])
                 ->setRoom(
                     (new Room())
@@ -177,16 +177,24 @@ class MessageTest extends Unit
         $message = (new Message())
             ->setCreatedAt($now)
             ->setRoom((new Room())
-                ->setCreatedAt($now));
+                ->setCreatedAt($now)
+            )->addContext(new MessageContext(['key' => 'test', 'value' => 'test']));
 
         $this->assertEquals(
             [
                 'id' => null,
                 'body' => null,
-                'user' => null,
+                'username' => null,
+                'display_username' => null,
                 'created_at' => $now->format(\DateTime::RFC3339),
                 'room_id' => null,
-                'contexts' => []
+                'contexts' => [
+                    [
+                        'id' => null,
+                        'key' => 'test',
+                        'value' => 'test',
+                    ]
+                ]
             ],
             $message->toArray()
         );
@@ -203,7 +211,8 @@ class MessageTest extends Unit
             [
                 'id' => null,
                 'body' => null,
-                'user' => null,
+                'username' => null,
+                'display_username' => null,
                 'created_at' => $now->format(\DateTime::RFC3339),
                 'contexts' => [],
                 'room' => null

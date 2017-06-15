@@ -15,7 +15,7 @@ class MessageContext extends Context
      * @var Message
      *
      * @ManyToOne(targetEntity="Message", inversedBy="contexts")
-     * @JoinColumn(name="message_id", referencedColumnName="id", onDelete="CASCADE")
+     * @JoinColumn(name="message_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     protected $message;
 

@@ -2,45 +2,31 @@
 
 namespace Fei\Service\Chat\Validator;
 
-use Doctrine\Common\Collections\Collection;
+use Fei\Entity\EntityInterface;
+use Fei\Entity\Validator\AbstractValidator;
+use Fei\Entity\Validator\Exception;
 use Fei\Service\Chat\Entity\Context;
 
 /**
  * Class ContextValidator
  *
- * @package Fei\Service\Chat\Validator
+ * @package Fei\Service\Filer\Validator
  */
-trait ContextValidator
+class ContextValidator extends AbstractValidator
 {
     /**
-     * Validate contexts
-     *
-     * @param mixed $contexts
-     *
-     * @return bool
+     * {@inheritdoc}
      */
-    public function validateContext($contexts)
+    public function validate(EntityInterface $entity)
     {
-        if (!$contexts instanceof Collection) {
-            $this->addError(
-                'contexts',
-                'Context has to be and instance of \Doctrine\Common\Collections\Collection'
-            );
-            return false;
+        if (!$entity instanceof Context) {
+            throw new Exception('The Entity to validate must be an instance of \Fei\Service\Chat\Entity\Context');
         }
 
-        if (!$contexts->isEmpty()) {
-            /** @var Context $context */
-            foreach ($contexts as $context) {
-                $this->validateKey($context->getKey());
-            }
+        $this->validateKey($entity->getKey());
+        $this->validateValue($entity->getValue());
 
-            if (!empty($this->getErrors())) {
-                return false;
-            }
-        }
-
-        return true;
+        return empty($this->getErrors());
     }
 
     /**
@@ -59,6 +45,23 @@ trait ContextValidator
 
         if (mb_strlen($key, 'UTF-8') > 255) {
             $this->addError('key', 'The key length has to be less or equal to 255');
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Validate value
+     *
+     * @param mixed $value
+     *
+     * @return bool
+     */
+    public function validateValue($value)
+    {
+        if (empty($value) && $value !== 0) {
+            $this->addError('value', 'The value cannot be empty');
             return false;
         }
 

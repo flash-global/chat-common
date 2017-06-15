@@ -4,20 +4,16 @@ namespace Fei\Service\Chat\Validator;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Fei\Entity\EntityInterface;
-use Fei\Entity\Validator\AbstractValidator;
 use Fei\Entity\Validator\Exception;
 use Fei\Service\Chat\Entity\Room;
-use Fei\Service\Context\Validator\ContextAwareValidatorTrait;
 
 /**
  * Class RoomValidator
  *
  * @package Fei\Service\Chat\Validator
  */
-class RoomValidator extends AbstractValidator
+class RoomValidator extends AbstractContextValidatorAware
 {
-    use ContextValidator;
-
     /**
      * Validate a Room instance
      *

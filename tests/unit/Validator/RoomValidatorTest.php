@@ -158,7 +158,7 @@ class RoomValidatorTest extends Unit
 
         $message = (new Message())
             ->setBody('test')
-            ->setUser('user')
+            ->setUsername('user')
             ->setRoom(new Room());
         $messages = new ArrayCollection([$message]);
         $this->assertTrue($validator->validateMessages($messages));

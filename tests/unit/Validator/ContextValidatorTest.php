@@ -2,75 +2,95 @@
 
 namespace Tests\Fei\Service\Chat\Validator;
 
-use Codeception\Test\Unit;
-use Doctrine\Common\Collections\ArrayCollection;
-use Fei\Service\Chat\Entity\Message;
-use Fei\Service\Chat\Entity\Context;
-use Fei\Service\Chat\Validator\MessageValidator;
+use Fei\Entity\Validator\Exception;
+use Fei\Service\Chat\Entity\Room;
+use Fei\Service\Chat\Entity\RoomContext;
+use Fei\Service\Chat\Validator\ContextValidator;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ContextValidatorTest
  *
  * @package Tests\Fei\Service\Chat\Validator
  */
-class ContextValidatorTest extends Unit
+class ContextValidatorTest extends TestCase
 {
-    public function testValidateKey()
+    /**
+     * @dataProvider dataForTestValidateKey
+     *
+     * @param $key
+     * @param $validation
+     * @param $error
+     */
+    public function testValidateKey($key, $validation, $error)
     {
-        $validator = $this->getContextValidator();
+        $validator = new ContextValidator();
 
-        $this->assertFalse($validator->validateKey(''));
-        $this->assertEquals('The key cannot be empty', $validator->getErrors()['key'][0]);
+        $result = $validator->validateKey($key);
 
-        $this->assertFalse($validator->validateKey($validator->validateKey(str_repeat('☃', 256))));
-        $this->assertEquals('The key length has to be less or equal to 255', $validator->getErrors()['key'][1]);
+        $this->assertEquals($validation, $result);
 
-        $this->assertTrue($validator->validateKey($validator->validateKey(str_repeat('☃', 255))));
+        if (!$result) {
+            $this->assertEquals($error, $validator->getErrors()['key'][0]);
+        }
     }
 
-    public function testValidate()
+    public function dataForTestValidateKey()
     {
-        $validator = $this->getContextValidator();
-
-        $this->assertFalse($validator->validateContext(new class extends Context {
-
-        }));
-
-        $validator = $this->getContextValidator();
-        $context = new class(['key' => 'a key', 'value' => 'a value']) extends Context {
-
-        };
-
-        $this->assertTrue($validator->validateContext(new ArrayCollection([$context])));
-
-        $validator = $this->getContextValidator();
-
-        $validator->validateContext(new Message());
-
-        $this->assertEquals(
-            ['Context has to be and instance of \Doctrine\Common\Collections\Collection'],
-            $validator->getErrors()['contexts']
-        );
+        return [
+            [null, false, 'The key cannot be empty'],
+            ['', false, 'The key cannot be empty'],
+            ['test', true, null],
+            [str_repeat('☃', 256), false, 'The key length has to be less or equal to 255'],
+            [str_repeat('☃', 255), true, null]
+        ];
     }
 
-    public function testValidateWithError()
+    /**
+     * @dataProvider dataForTestValidateValue
+     *
+     * @param $value
+     * @param $validation
+     * @param $error
+     */
+    public function testValidateValue($value, $validation, $error)
     {
-        $contexts = new ArrayCollection([
-            new class(['key' => 'a key', 'value' => 'a value']) extends Context {
+        $validator = new ContextValidator();
 
-            },
-            new class(['key' => str_repeat('☃', 256), 'value' => 'a value']) extends Context {
+        $result = $validator->validateValue($value);
 
-            }
-        ]);
+        $this->assertEquals($validation, $result);
 
-        $validator = $this->getContextValidator();
-
-        $this->assertFalse($validator->validateContext($contexts));
+        if (!$result) {
+            $this->assertEquals($error, $validator->getErrors()['value'][0]);
+        }
     }
 
-    protected function getContextValidator()
+    public function dataForTestValidateValue()
     {
-        return new MessageValidator();
+        return [
+            [null, false, 'The value cannot be empty'],
+            ['', false, 'The value cannot be empty'],
+            ['test', true, null],
+            [str_repeat('☃', 256), true, null],
+            [str_repeat('☃', 255), true, null]
+        ];
+    }
+
+    public function testValidateContextIsEmpty()
+    {
+        $validator = new ContextValidator();
+
+        $this->assertFalse($validator->validate(new RoomContext()));
+    }
+
+    public function testValidateThatEntityIsNotAContext()
+    {
+        $validator = new ContextValidator();
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('The Entity to validate must be an instance of \Fei\Service\Chat\Entity\Context');
+
+        $this->assertFalse($validator->validate(new Room()));
     }
 }
