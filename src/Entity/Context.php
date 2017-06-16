@@ -10,6 +10,8 @@ use Fei\Entity\AbstractEntity;
  * @package Fei\Service\Chat\Entity
  *
  * @MappedSuperclass
+ *
+ * @Table(indexes={@Index(name="context_idx", columns={"key", "value"})})
  */
 abstract class Context extends AbstractEntity
 {

@@ -4,7 +4,6 @@ namespace Fei\Service\Chat\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Fei\Entity\AbstractEntity;
-use Fei\Entity\EntityInterface;
 
 /**
  * Class Location
@@ -14,7 +13,7 @@ use Fei\Entity\EntityInterface;
  * @Entity
  * @Table(
  *     name="messages",
- *     indexes={ @Index(name="user_idx", columns={"user"}) }
+ *     indexes={ @Index(name="user_idx", columns={"username"}) }
  * )
  */
 class Message extends AbstractEntity
@@ -44,13 +43,19 @@ class Message extends AbstractEntity
      * @var string
      * @Column(type="string")
      */
-    protected $user;
+    protected $username;
+
+    /**
+     * @var string
+     * @Column(type="string", nullable=true)
+     */
+    protected $displayUsername;
 
     /**
      * @var Room
      *
      * @ManyToOne(targetEntity="Room")
-     * @JoinColumn(name="room_id", referencedColumnName="id")
+     * @JoinColumn(name="room_id", referencedColumnName="id", nullable=false)
      */
     protected $room;
 
@@ -136,25 +141,49 @@ class Message extends AbstractEntity
     }
 
     /**
-     * Get User
+     * Get Username
      *
      * @return string
      */
-    public function getUser()
+    public function getUsername()
     {
-        return $this->user;
+        return $this->username;
     }
 
     /**
-     * Set User
+     * Set Username
      *
-     * @param string $user
+     * @param string $username
      *
      * @return $this
      */
-    public function setUser($user)
+    public function setUsername($username)
     {
-        $this->user = $user;
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get DisplayUsername
+     *
+     * @return string
+     */
+    public function getDisplayUsername()
+    {
+        return $this->displayUsername;
+    }
+
+    /**
+     * Set DisplayUsername
+     *
+     * @param string $displayUsername
+     *
+     * @return $this
+     */
+    public function setDisplayUsername($displayUsername)
+    {
+        $this->displayUsername = $displayUsername;
 
         return $this;
     }

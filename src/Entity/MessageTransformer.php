@@ -24,7 +24,8 @@ class MessageTransformer extends TransformerAbstract
             'id' => (int) $message->getId(),
             'created_at' => $message->getCreatedAt()->format(\DateTime::ISO8601),
             'body' => $message->getBody(),
-            'user' => $message->getUser(),
+            'username' => $message->getUsername(),
+            'display_username' => $message->getDisplayUsername(),
             'room' => $message->getRoom() ? (new RoomTransformer())->transform($message->getRoom()) : [],
             'contexts' => $contextItems
         );

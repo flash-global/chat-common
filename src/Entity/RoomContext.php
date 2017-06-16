@@ -15,7 +15,7 @@ class RoomContext extends Context
      * @var Room
      *
      * @ManyToOne(targetEntity="Room", inversedBy="contexts")
-     * @JoinColumn(name="room_id", referencedColumnName="id", onDelete="CASCADE")
+     * @JoinColumn(name="room_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     protected $room;
 

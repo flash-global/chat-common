@@ -4,17 +4,15 @@ namespace Fei\Service\Chat\Validator;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Fei\Entity\EntityInterface;
-use Fei\Entity\Validator\AbstractValidator;
 use Fei\Entity\Validator\Exception;
 use Fei\Service\Chat\Entity\Room;
-use Fei\Service\Context\Validator\ContextAwareValidatorTrait;
 
 /**
  * Class RoomValidator
  *
  * @package Fei\Service\Chat\Validator
  */
-class RoomValidator extends AbstractValidator
+class RoomValidator extends AbstractContextValidatorAware
 {
     /**
      * Validate a Room instance
@@ -37,7 +35,7 @@ class RoomValidator extends AbstractValidator
         $this->validateCreatedAt($entity->getCreatedAt());
         $this->validateStatus($entity->getStatus());
         $this->validateName($entity->getName());
-        //$this->validateContext($entity->getContexts());
+        $this->validateContext($entity->getContexts());
         $this->validateMessages($entity->getMessages());
 
         $errors = $this->getErrors();

@@ -4,17 +4,15 @@ namespace Fei\Service\Chat\Validator;
 
 use Fei\Entity\EntityInterface;
 use Fei\Entity\Validator\Exception;
-use Fei\Entity\Validator\AbstractValidator;
 use Fei\Service\Chat\Entity\Message;
 use Fei\Service\Chat\Entity\Room;
-use Fei\Service\Context\Validator\ContextAwareValidatorTrait;
 
 /**
  * Class MessageValidator
  *
  * @package Fei\Service\Chat\Validator
  */
-class MessageValidator extends AbstractValidator
+class MessageValidator extends AbstractContextValidatorAware
 {
     /**
      * Validate a Message instance
@@ -27,6 +25,7 @@ class MessageValidator extends AbstractValidator
      */
     public function validate(EntityInterface $entity)
     {
+
         if (!$entity instanceof Message) {
             throw new Exception(
                 sprintf('The Entity to validate must be an instance of %s', Message::class)
@@ -35,9 +34,10 @@ class MessageValidator extends AbstractValidator
 
         $this->validateBody($entity->getBody());
         $this->validateCreatedAt($entity->getCreatedAt());
-        $this->validateUser($entity->getUser());
+        $this->validateUsername($entity->getUsername());
+        $this->validateDisplayUsername($entity->getDisplayUsername());
         $this->validateRoom($entity->getRoom());
-        //$this->validateContext($entity->getContext());
+        $this->validateContext($entity->getContexts());
         $errors = $this->getErrors();
 
         return empty($errors);
@@ -94,7 +94,7 @@ class MessageValidator extends AbstractValidator
      *
      * @return bool
      */
-    public function validateUser($user)
+    public function validateUsername($user)
     {
         if (empty($user)) {
             $this->addError('user', 'The user cannot be empty');
@@ -108,6 +108,32 @@ class MessageValidator extends AbstractValidator
 
         if (mb_strlen($user, 'UTF-8') > 255) {
             $this->addError('user', 'The user length has to be less or equal to 255');
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Validate name
+     *
+     * @param mixed $user
+     *
+     * @return bool
+     */
+    public function validateDisplayUsername($user)
+    {
+        if (is_null($user)) {
+            return true;
+        }
+
+        if (!is_string($user)) {
+            $this->addError('user', 'The display username must be a string');
+            return false;
+        }
+
+        if (mb_strlen($user, 'UTF-8') > 255) {
+            $this->addError('user', 'The display username length has to be less or equal to 255');
             return false;
         }
 

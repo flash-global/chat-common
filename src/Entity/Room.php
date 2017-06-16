@@ -4,7 +4,6 @@ namespace Fei\Service\Chat\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Fei\Entity\AbstractEntity;
-use Fei\Service\Context\ContextAwareTrait;
 
 /**
  * Class Location
