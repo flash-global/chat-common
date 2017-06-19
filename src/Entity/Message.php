@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Fei\Entity\AbstractEntity;
 
 /**
- * Class Location
+ * Class Message
  *
  * @package Fei\Service\Chat\Entity
  *
