@@ -33,6 +33,15 @@ class RoomTest extends Unit
         $this->assertAttributeEquals($room->getKey(), 'key', $room);
     }
 
+    public function testPrivateAccessors()
+    {
+        $room = new Room();
+        $room->setPrivate(true);
+
+        $this->assertEquals(true, $room->isPrivate());
+        $this->assertAttributeEquals($room->isPrivate(), 'private', $room);
+    }
+
     public function testCreatedAt()
     {
         $room = new Room();

@@ -33,6 +33,15 @@ class MessageTest extends Unit
         $this->assertAttributeEquals($message->getBody(), 'body', $message);
     }
 
+    public function testDisplayUsername()
+    {
+        $message = new Message();
+        $message->setDisplayUsername("username");
+
+        $this->assertEquals('username', $message->getDisplayUsername());
+        $this->assertAttributeEquals($message->getDisplayUsername(), 'displayUsername', $message);
+    }
+
     public function testCreatedAt()
     {
         $message = new Message();
