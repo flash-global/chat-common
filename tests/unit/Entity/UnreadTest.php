@@ -32,6 +32,6 @@ class UnreadTest extends Unit
         $unread->setUsername('user');
 
         $this->assertEquals('user', $unread->getUsername());
-        $this->assertAttributeEquals($unread->getUsername(), 'user', $unread);
+        $this->assertAttributeEquals($unread->getUsername(), 'username', $unread);
     }
 }

@@ -73,6 +73,13 @@ class Room extends AbstractEntity
     protected $contexts;
 
     /**
+     * @var bool
+     *
+     * @Column(type="boolean", options={"default":0})
+     */
+    protected $private;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct($data = null)
@@ -231,6 +238,30 @@ class Room extends AbstractEntity
     public function getContexts()
     {
         return $this->contexts;
+    }
+
+    /**
+     * Get Private
+     *
+     * @return bool
+     */
+    public function isPrivate(): bool
+    {
+        return $this->private;
+    }
+
+    /**
+     * Set Private
+     *
+     * @param bool $private
+     *
+     * @return $this
+     */
+    public function setPrivate(bool $private)
+    {
+        $this->private = $private;
+
+        return $this;
     }
 
     /**
