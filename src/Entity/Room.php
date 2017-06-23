@@ -86,6 +86,7 @@ class Room extends AbstractEntity
     {
         $this->setMessages(new ArrayCollection());
         $this->setCreatedAt(new \DateTime());
+        $this->setPrivate(false);
 
         $this->contexts = new ArrayCollection();
 
@@ -245,7 +246,7 @@ class Room extends AbstractEntity
      *
      * @return bool
      */
-    public function isPrivate(): bool
+    public function getPrivate()
     {
         return $this->private;
     }
@@ -257,7 +258,7 @@ class Room extends AbstractEntity
      *
      * @return $this
      */
-    public function setPrivate(bool $private)
+    public function setPrivate($private)
     {
         $this->private = $private;
 
