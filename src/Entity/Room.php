@@ -75,7 +75,7 @@ class Room extends AbstractEntity
     /**
      * @var bool
      *
-     * @Column(type="boolean")
+     * @Column(type="boolean", options={"default":0})
      */
     protected $private;
 
