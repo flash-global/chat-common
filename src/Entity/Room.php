@@ -38,6 +38,13 @@ class Room extends AbstractEntity
     protected $key;
 
     /**
+     * @var string
+     *
+     * @Column(type="string", name="`token`")
+     */
+    protected $token;
+
+    /**
      * @var \DateTime
      *
      * @Column(type="datetime")
@@ -128,6 +135,25 @@ class Room extends AbstractEntity
         $this->key = $key;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     * @return $this
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+        return $this;
+    }
+
 
     /**
      * @return \DateTime
