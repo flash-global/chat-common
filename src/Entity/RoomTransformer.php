@@ -37,7 +37,8 @@ class RoomTransformer extends TransformerAbstract
         $transformed = array(
             'id' => (int) $room->getId(),
             'created_at' => $room->getCreatedAt()->format(\DateTime::ISO8601),
-            'key' => $room->getKey(),
+	    'key' => $room->getKey(),
+	    'token' => $room->getToken(),
             'name' => $room->getName(),
             'status' => $room->getStatus(),
             'messages' => [],
