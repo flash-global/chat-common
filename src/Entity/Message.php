@@ -249,7 +249,7 @@ class Message extends AbstractEntity
                     $value = new MessageContext($contextData);
                 }
                 $value->setMessage($this);
-                $this->contexts->add($value);
+                $this->contexts->offsetSet($key, $value);
             }
         }
         return $this;
