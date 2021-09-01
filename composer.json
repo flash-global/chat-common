@@ -21,7 +21,7 @@
         "league/fractal": "^0.14"
     },
     "require-dev": {
-        "codeception/codeception": "^2.2"
+        "codeception/codeception": "^2.2 || ^3.0"
     },
     "autoload": {
         "psr-4": {
